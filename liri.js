@@ -4,10 +4,28 @@ searchType = process.argv[2];
 searchItem = process.argv[3];
 
 
-//// HERE GOES THE OMDB SECTION ////
+// Possible type of commands:
+
+switch (searchType) {
+    case 'movie-this':
+        movieThis(searchItem);
+        return;
+    case 'spotify-this-song':
+        spotifyThis(searchItem);
+        return;
+    case 'my-tweets':
+        myTweets(searchItem);
+        return;
+    case 'do-as-it-says':
+        doAsSays();
+        return;
+    default:
+        console.log('Invalid command');
+}
 
 
-if (searchType === 'movie-this') {
+///HERE WE DEFINE THE MOVIE-THIS FUNCTION///
+function movieThis(searchType){	
 
 // in case the title of the movie is more than one word, let's concatenate each word
 // with + symbols
@@ -51,10 +69,9 @@ console.log("The Rotten Tomatoes URL is: " + JSON.parse(body).tomatoURL);
 })
 };
 
-/// HERE GOES THE SPOTITY SECTION //////
+/// HERE WE DEFINE THE SPOTITY FUNCTION //////
 
-if (searchType === 'spotify-this-song') {
-
+function spotifyThis(searchItem){
 
 var spotify = require('spotify');
 
@@ -71,13 +88,11 @@ spotify.search({ type: 'track', query: songTitle, limit: 1}, function(err, data)
 
 // console.log(JSON.stringify(data, null, 2));
 
+//Eventhough I set the limit of search to one, it doesn't work for some reason
+//that is why I only chose the first element in the data object
+
 var result = data.tracks.items[0];
 
-// console.log(data.tracks.items.length)
-
-// data.tracks.items.forEach(function(item){
-// 	console.log(item.album.album_type);
-// })
 
 // Artist(s)
 console.log('The name of the group: ' + result.artists[0].name);
@@ -97,9 +112,29 @@ console.log('The name of the album: ' + result.album.name);
 
 // "The Sign" by Ace of Base
 
-
 })
 };
 
 
-/// HERE GOES THE TWEETER SECTION //////
+/// HERE WE DEFINE THE TWITTER FUNCTION //////
+
+function myTweets(){
+
+};
+
+/// HERE WE DEFINE THE DO-AS-SAYS FUNCTION///
+
+function doAsSays(){
+
+var fs = require("fs")
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        var dataArray = data.split(",");
+
+
+        console.log("this is the random command: " + dataArray);
+
+
+    })
+};
